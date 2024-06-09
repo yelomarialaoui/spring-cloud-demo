@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: customer_route
+          uri: lb://CUSTOMER-MICROSERVICE
+          predicates:
+            - Path=/customer/**
+        - id: order_route
+          uri: lb://ORDER-MICROSERVICE
+          predicates:
+            - Path=/order/**
+    loadbalancer:
+      health-check:
+        enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
